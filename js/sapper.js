@@ -219,10 +219,12 @@ function clicker() {
                 object.removeEventListener("click" , clicker, false);
             };
             console.log("you lose");
+            resualtGame.textContent = "You Lose!!!"
             sizeSet = true;
             mineSet = true;
             MinesSet();
             SizeSet();
+            clearTimeout(t);
         }
         else if (role === "0") {
             const trampolineZeroFinder = trampoline(ZeroFinder)
@@ -425,6 +427,7 @@ function winChecker() {
     }
     if ( win === true) {
         console.log("you win!");
+        resualtGame.innerHTML = "You Win!!!"
         for (let object of Board.childNodes) {
             object.removeEventListener("click" , clicker, false);
         };
@@ -432,6 +435,7 @@ function winChecker() {
         mineSet = true;
         MinesSet();
         SizeSet();
+        clearTimeout(t);
     }
 }
 
@@ -602,6 +606,59 @@ startButton.addEventListener("click",function() {
     GameManager();
     MinesSet();
     SizeSet();
+    resetTimer();
+    timer();
+    resualtGame.innerHTML = "..."
 });
 MinesSet();
 SizeSet();
+
+
+
+//resualt
+let resualtGame = document.querySelector(".resualtGame")
+
+
+
+// timer
+var h4 = document.getElementsByTagName('h4')[0];
+var sec = 0;
+var min = 0;
+var hrs = 0;
+var t;
+
+function tick(){
+    sec++;
+    if (sec >= 60) {
+        sec = 0;
+        min++;
+        if (min >= 60) {
+            min = 0;
+            hrs++;
+        }
+    }
+}
+function add() {
+    tick();
+    h4.textContent = (hrs > 9 ? hrs : "0" + hrs) 
+        	 + ":" + (min > 9 ? min : "0" + min)
+       		 + ":" + (sec > 9 ? sec : "0" + sec);
+    timer();
+}
+function timer() {
+    t = setTimeout(add, 1000);
+}
+
+// start.onclick = timer;
+// stop.onclick = function() {
+//     clearTimeout(t);
+// }
+// reset.onclick = function() {
+//     sec = 0; min = 0; hrs = 0;
+//     h4.textContent = "";
+// }
+
+function resetTimer() {
+    sec = 0; min = 0; hrs = 0;
+    h4.innerHTML = "&nbsp";
+}
